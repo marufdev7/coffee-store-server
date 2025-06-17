@@ -40,12 +40,34 @@ async function run() {
             const query = { _id: new ObjectId(id) }
             const result = await coffeeCollection.findOne(query);
             res.send(result);
-        })
+        });
 
         app.post('/coffee', async (req, res) => {
             const coffee = req.body;
             console.log(coffee);
             const result = await coffeeCollection.insertOne(coffee);
+            res.send(result);
+        });
+
+        app.put('/coffee/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updatedCoffee = req.body;
+
+            const coffee = {
+                $set: {
+                    name: updatedCoffee.name,
+                    chef: updatedCoffee.chef,
+                    supplier: updatedCoffee.supplier,
+                    test: updatedCoffee.test,
+                    category: updatedCoffee.category,
+                    photo: updatedCoffee.photo,
+                    details: updatedCoffee.details
+                }
+            }
+
+            const result = await coffeeCollection.updateOne(filter, coffee, options);
             res.send(result);
         });
 
