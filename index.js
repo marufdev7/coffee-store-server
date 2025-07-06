@@ -46,7 +46,7 @@ async function run() {
 
         app.post('/coffee', async (req, res) => {
             const coffee = req.body;
-            console.log(coffee);
+            // console.log(coffee);
             const result = await coffeeCollection.insertOne(coffee);
             res.send(result);
         });
@@ -85,13 +85,14 @@ async function run() {
         app.get('/users', async (req, res) => {
             const cursor = userCollection.find();
             const result = await cursor.toArray();
+            // console.log(result);
             res.send(result);
         });
 
 
         app.post('/users', async (req, res) => {
             const newUser = req.body;
-            console.log('new user added', newUser);
+            // console.log('new user added', newUser);
             const result = await userCollection.insertOne(newUser);
             res.send(result);
         });
